@@ -1,7 +1,0 @@
-/Users/zaid/Desktop/DevOps/talentsphere/backend/src/main/java/com/talentsphere/BackendApplication.java
-/Users/zaid/Desktop/DevOps/talentsphere/backend/src/main/java/com/talentsphere/controller/AuthController.java
-/Users/zaid/Desktop/DevOps/talentsphere/backend/src/main/java/com/talentsphere/dto/RegisterRequest.java
-/Users/zaid/Desktop/DevOps/talentsphere/backend/src/main/java/com/talentsphere/entity/User.java
-/Users/zaid/Desktop/DevOps/talentsphere/backend/src/main/java/com/talentsphere/repository/UserRepository.java
-/Users/zaid/Desktop/DevOps/talentsphere/backend/src/main/java/com/talentsphere/security/SecurityConfig.java
-/Users/zaid/Desktop/DevOps/talentsphere/backend/src/main/java/com/talentsphere/service/UserService.java
