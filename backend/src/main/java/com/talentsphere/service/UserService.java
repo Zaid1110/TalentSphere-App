@@ -3,8 +3,8 @@ package com.talentsphere.service;
 import com.talentsphere.dto.RegisterRequest;
 import com.talentsphere.entity.User;
 import com.talentsphere.repository.UserRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -13,8 +13,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository,
-		       PasswordEncoder passwordEncoder) {
-
+                       PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -35,5 +34,20 @@ public class UserService {
         userRepository.save(user);
 
         return "User registered successfully";
+    }
+
+    public boolean login(String email, String password) {
+
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        return passwordEncoder.matches(
+                password,
+                user.getPassword()
+        );
     }
 }
