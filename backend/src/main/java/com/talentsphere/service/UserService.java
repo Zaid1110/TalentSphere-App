@@ -4,8 +4,8 @@ import com.talentsphere.dto.ProfileRequest;
 import com.talentsphere.dto.RegisterRequest;
 import com.talentsphere.entity.User;
 import com.talentsphere.repository.UserRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -14,8 +14,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository,
-		       PasswordEncoder passwordEncoder) {
-
+                       PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -38,24 +37,39 @@ public class UserService {
         return "User registered successfully";
     }
 
-    public User updateProfile(
-             Long userId,
-             ProfileRequest request) {
+    public boolean login(String email, String password) {
 
-         User user =
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        return passwordEncoder.matches(
+                password,
+                user.getPassword()
+        );
+    }
+
+    public User updateProfile(
+            Long userId,
+            ProfileRequest request) {
+
+        User user =
                 userRepository.findById(userId)
                         .orElseThrow();
 
-         user.setTitle(request.getTitle());
-         user.setBio(request.getBio());
-         user.setLocation(request.getLocation());
-         user.setLinkedinUrl(
+        user.setTitle(request.getTitle());
+        user.setBio(request.getBio());
+        user.setLocation(request.getLocation());
+
+        user.setLinkedinUrl(
                 request.getLinkedinUrl());
 
-         user.setGithubUrl(
+        user.setGithubUrl(
                 request.getGithubUrl());
 
         return userRepository.save(user);
-}
-
+    }
 }
