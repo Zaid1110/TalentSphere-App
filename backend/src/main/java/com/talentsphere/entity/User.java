@@ -24,4 +24,14 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+    private String title;
+
+    @Column(length = 1000)
+    private String bio;
+
+    private String location;
+
+    private String linkedinUrl;
+
+    private String githubUrl;
 }

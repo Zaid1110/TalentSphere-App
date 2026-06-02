@@ -1,5 +1,6 @@
 package com.talentsphere.service;
 
+import com.talentsphere.dto.ProfileRequest;
 import com.talentsphere.dto.RegisterRequest;
 import com.talentsphere.entity.User;
 import com.talentsphere.repository.UserRepository;
@@ -49,5 +50,26 @@ public class UserService {
                 password,
                 user.getPassword()
         );
+    }
+
+    public User updateProfile(
+            Long userId,
+            ProfileRequest request) {
+
+        User user =
+                userRepository.findById(userId)
+                        .orElseThrow();
+
+        user.setTitle(request.getTitle());
+        user.setBio(request.getBio());
+        user.setLocation(request.getLocation());
+
+        user.setLinkedinUrl(
+                request.getLinkedinUrl());
+
+        user.setGithubUrl(
+                request.getGithubUrl());
+
+        return userRepository.save(user);
     }
 }
