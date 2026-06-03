@@ -12,7 +12,10 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const isLoggedIn = !!localStorage.getItem("token");
+
+  const isLoggedIn =
+    !!localStorage.getItem("token");
+
   const logout = () => {
 
     localStorage.removeItem("token");
@@ -21,53 +24,51 @@ function App() {
   };
 
   return (
+
     <BrowserRouter>
 
       <div className="navbar">
-        <div className="nav-links">
 
-  <Link to="/">Home</Link>
-
-  {!isLoggedIn && (
-    <>
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
-    </>
-  )}
-
-  {isLoggedIn && (
-    <>
-      <Link to="/">Dashboard</Link>
-
-      <button
-        className="logout-btn"
-        onClick={logout}
-      >
-        Logout
-      </button>
-    </>
-  )}
-
-</div>
         <div>
+
           <h1>TalentSphere</h1>
-          <p>DevOps Portfolio Platform</p>
+
+          <p>
+            DevOps Portfolio Platform
+          </p>
+
         </div>
 
         <div className="nav-links">
 
           <Link to="/">Home</Link>
 
-          <Link to="/login">Login</Link>
+          {!isLoggedIn && (
+            <>
+              <Link to="/login">
+                Login
+              </Link>
 
-          <Link to="/register">Register</Link>
+              <Link to="/register">
+                Register
+              </Link>
+            </>
+          )}
 
-          <button
-            className="logout-btn"
-            onClick={logout}
-          >
-            Logout
-          </button>
+          {isLoggedIn && (
+            <>
+              <Link to="/">
+                Dashboard
+              </Link>
+
+              <button
+                className="logout-btn"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </>
+          )}
 
         </div>
 
@@ -93,6 +94,7 @@ function App() {
       </Routes>
 
     </BrowserRouter>
+
   );
 }
 
