@@ -1,20 +1,20 @@
 pipeline {
 
-```
-agent any
+    agent any
 
-stages {
+    stages {
 
-    stage('Build Backend') {
-        steps {
-            dir('backend') {
-                sh 'mvn clean package -DskipTests'
+        stage('Build Backend') {
+
+            steps {
+
+                dir('backend') {
+
+                    sh 'mvn clean package -DskipTests'
+
+                }
             }
         }
+
     }
-
 }
-```
-
-}
-
