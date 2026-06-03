@@ -1,8 +1,0 @@
-com/talentsphere/dto/RegisterRequest.class
-com/talentsphere/entity/User$UserBuilder.class
-com/talentsphere/entity/User.class
-com/talentsphere/repository/UserRepository.class
-com/talentsphere/security/SecurityConfig.class
-com/talentsphere/controller/AuthController.class
-com/talentsphere/service/UserService.class
-com/talentsphere/BackendApplication.class
