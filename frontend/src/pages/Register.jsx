@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 
 function Register() {
@@ -11,63 +12,69 @@ function Register() {
 
   const register = async () => {
 
-  console.log("Register button clicked");
-  console.log(form);
+    try {
 
-  try {
+      const response = await api.post(
+        "/auth/register",
+        form
+      );
 
-    const response = await api.post(
-      "/auth/register",
-      form
-    );
+      alert(response.data);
 
-    console.log(response);
+    } catch {
 
-    alert("User registered successfully");
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("Registration failed");
-  }
-};
+      alert("Registration Failed");
+    }
+  };
 
   return (
-    <div>
-      <h2>Register</h2>
 
-      <input
-        placeholder="Name"
-        onChange={(e) =>
-          setForm({ ...form, name: e.target.value })
-        }
-      />
+    <div className="container">
 
-      <br />
+      <div className="card">
 
-      <input
-        placeholder="Email"
-        onChange={(e) =>
-          setForm({ ...form, email: e.target.value })
-        }
-      />
+        <h2>Create Account</h2>
 
-      <br />
+        <input
+          placeholder="Name"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              name: e.target.value
+            })}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) =>
-          setForm({ ...form, password: e.target.value })
-        }
-      />
+        <input
+          placeholder="Email"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              email: e.target.value
+            })}
+        />
 
-      <br />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              password: e.target.value
+            })}
+        />
 
-      <button onClick={register}>
-        Register
-      </button>
+        <button onClick={register}>
+          Register
+        </button>
+
+        <div className="link">
+          <Link to="/login">
+            Already have an account?
+          </Link>
+        </div>
+
+      </div>
+
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 
 function Login() {
@@ -8,62 +9,61 @@ function Login() {
 
   const login = async () => {
 
-  console.log("Login clicked");
+    try {
 
-  try {
+      const response = await api.post(
+        "/auth/login",
+        {
+          email,
+          password
+        }
+      );
 
-    const response = await api.post(
-      "/auth/login",
-      {
-        email,
-        password
-      }
-    );
+      localStorage.setItem(
+        "token",
+        response.data.token
+      );
 
-    console.log(response);
+      alert("Login Successful");
 
-    localStorage.setItem(
-      "token",
-      response.data.token
-    );
+    } catch (error) {
 
-    alert("Login Successful");
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("Login Failed");
-  }
-};
+      alert("Login Failed");
+    }
+  };
 
   return (
-    <div>
 
-      <h2>Login</h2>
+    <div className="container">
 
-      <input
-        placeholder="Email"
-        onChange={(e) =>
-          setEmail(e.target.value)
-        }
-      />
+      <div className="card">
 
-      <br />
+        <h2>Login</h2>
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
+        <input
+          placeholder="Email"
+          onChange={(e) =>
+            setEmail(e.target.value)}
+        />
 
-      <br />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) =>
+            setPassword(e.target.value)}
+        />
 
-      <button onClick={login}>
-        Login
-      </button>
+        <button onClick={login}>
+          Login
+        </button>
+
+        <div className="link">
+          <Link to="/register">
+            Create Account
+          </Link>
+        </div>
+
+      </div>
 
     </div>
   );
