@@ -190,66 +190,28 @@ stages {
 
     stage('Deploy Backend') {
 
-
-
         steps {
 
-
-
             sh '''
-
             docker stop talentsphere-backend || true
-
-
-
             docker rm talentsphere-backend || true
-
-
-
-            docker run -d \
-
-              --name talentsphere-backend \
-
-              -p 8081:8080 \
-
-              talentsphere-backend:latest
-
+	    docker run -d --name talentsphere-backend -p 8081:8080 talentsphere-backend:latest
             '''
-
         }
 
     }
 
 
-
     stage('Deploy Frontend') {
-
 
 
         steps {
 
-
-
             sh '''
-
             docker stop talentsphere-frontend || true
-
-
-
             docker rm talentsphere-frontend || true
-
-
-
-            docker run -d \
-
-              --name talentsphere-frontend \
-
-              -p 3000:80 \
-
-              talentsphere-frontend:latest
-
+            docker run -d --name talentsphere-frontend -p 3000:80 talentsphere-frontend:latest
             '''
-
         }
 
     }
