@@ -46,8 +46,6 @@ stages {
 
                 sh 'npm install'
 
-
-
                 sh 'npm run build'
 
             }
@@ -152,8 +150,6 @@ stages {
 
             docker tag talentsphere-backend:latest zaidaftab/talentsphere-backend:latest
 
-
-
             docker push zaidaftab/talentsphere-backend:latest
 
             '''
@@ -175,8 +171,6 @@ stages {
             sh '''
 
             docker tag talentsphere-frontend:latest zaidaftab/talentsphere-frontend:latest
-
-
 
             docker push zaidaftab/talentsphere-frontend:latest
 
@@ -204,9 +198,7 @@ stages {
 
 
 
-            docker run -d \
-
-            --name talentsphere-backend \
+            docker run -d --name talentsphere-backend \
 
             -p 8081:8080 \
 
@@ -236,9 +228,7 @@ stages {
 
 
 
-            docker run -d \
-
-            --name talentsphere-frontend \
+            docker run -d --name talentsphere-frontend \
 
             -p 3000:80 \
 
