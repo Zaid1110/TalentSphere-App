@@ -102,6 +102,92 @@ stages {
 
 
 
+    stage('Docker Hub Login') {
+
+
+
+        steps {
+
+
+
+            withCredentials([
+
+                usernamePassword(
+
+                    credentialsId: 'dockerhub-creds',
+
+                    usernameVariable: 'DOCKER_USER',
+
+                    passwordVariable: 'DOCKER_PASS'
+
+                )
+
+            ]) {
+
+
+
+                sh '''
+
+                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+                '''
+
+            }
+
+        }
+
+    }
+
+
+
+    stage('Push Backend Image') {
+
+
+
+        steps {
+
+
+
+            sh '''
+
+            docker tag talentsphere-backend:latest zaidaftab/talentsphere-backend:latest
+
+
+
+            docker push zaidaftab/talentsphere-backend:latest
+
+            '''
+
+        }
+
+    }
+
+
+
+    stage('Push Frontend Image') {
+
+
+
+        steps {
+
+
+
+            sh '''
+
+            docker tag talentsphere-frontend:latest zaidaftab/talentsphere-frontend:latest
+
+
+
+            docker push zaidaftab/talentsphere-frontend:latest
+
+            '''
+
+        }
+
+    }
+
+
+
     stage('Deploy Backend') {
 
 
@@ -110,11 +196,23 @@ stages {
 
 
 
-            sh 'docker rm -f talentsphere-backend || true'
+            sh '''
+
+            docker stop talentsphere-backend || true
+
+            docker rm talentsphere-backend || true
 
 
 
-            sh 'docker run -d --name talentsphere-backend -p 8081:8080 --link talentsphere-mysql:mysql -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/talentsphere -e SPRING_DATASOURCE_USERNAME=root -e SPRING_DATASOURCE_PASSWORD=root123 talentsphere-backend:latest'
+            docker run -d \
+
+            --name talentsphere-backend \
+
+            -p 8081:8080 \
+
+            talentsphere-backend:latest
+
+            '''
 
         }
 
@@ -130,16 +228,30 @@ stages {
 
 
 
-            sh 'docker rm -f talentsphere-frontend || true'
+            sh '''
+
+            docker stop talentsphere-frontend || true
+
+            docker rm talentsphere-frontend || true
 
 
 
-            sh 'docker run -d --name talentsphere-frontend -p 3000:80 talentsphere-frontend:latest'
+            docker run -d \
+
+            --name talentsphere-frontend \
+
+            -p 3000:80 \
+
+            talentsphere-frontend:latest
+
+            '''
 
         }
 
     }
 
 }
+
+
 
 }
