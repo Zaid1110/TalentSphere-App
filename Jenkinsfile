@@ -28,5 +28,26 @@ pipeline {
             }
         }
 
+        stage('Docker Build Backend') {
+
+            steps {
+
+                dir('backend') {
+
+                    sh 'docker build -t talentsphere-backend:latest .'
+                }
+            }
+        }
+
+        stage('Docker Build Frontend') {
+
+            steps {
+
+                dir('frontend') {
+
+                    sh 'docker build -t talentsphere-frontend:latest .'
+                }
+            }
+        }
     }
 }
