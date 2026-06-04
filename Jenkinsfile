@@ -1,5 +1,6 @@
 pipeline {
 
+
 agent any
 
 stages {
@@ -11,6 +12,7 @@ stages {
             dir('backend') {
 
                 sh 'mvn clean package -DskipTests'
+
             }
         }
     }
@@ -24,6 +26,7 @@ stages {
                 sh 'npm install'
 
                 sh 'npm run build'
+
             }
         }
     }
@@ -35,6 +38,7 @@ stages {
             dir('backend') {
 
                 sh 'docker build -t talentsphere-backend:latest .'
+
             }
         }
     }
@@ -46,6 +50,7 @@ stages {
             dir('frontend') {
 
                 sh 'docker build -t talentsphere-frontend:latest .'
+
             }
         }
     }
@@ -54,18 +59,18 @@ stages {
 
         steps {
 
-            sh
-            docker rm -f talentsphere-backend || true
+            sh 
+                docker rm -f talentsphere-backend || true
 
-            docker run -d \
-              --name talentsphere-backend \
-              -p 8081:8080 \
-              --link talentsphere-mysql:mysql \
-              -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/talentsphere \
-              -e SPRING_DATASOURCE_USERNAME=root \
-              -e SPRING_DATASOURCE_PASSWORD=root123 \
-              talentsphere-backend:latest
-           
+                docker run -d \
+                --name talentsphere-backend \
+                -p 8081:8080 \
+                --link talentsphere-mysql:mysql \
+                -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/talentsphere \
+                -e SPRING_DATASOURCE_USERNAME=root \
+                -e SPRING_DATASOURCE_PASSWORD=root123 \
+                talentsphere-backend:latest
+            
         }
     }
 
@@ -73,16 +78,18 @@ stages {
 
         steps {
 
-            sh
-            docker rm -f talentsphere-frontend || true
+            sh 
+                docker rm -f talentsphere-frontend || true
 
-            docker run -d \
-              --name talentsphere-frontend \
-              -p 3000:80 \
-              talentsphere-frontend:latest
+                docker run -d \
+                --name talentsphere-frontend \
+                -p 3000:80 \
+                talentsphere-frontend:latest
+            
         }
     }
 }
+
 
 }
 
