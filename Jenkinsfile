@@ -49,5 +49,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy') {
+
+            steps {
+
+                sh '''
+                cd /home/ubuntu/talentsphere
+
+                docker compose down
+
+                docker compose up -d
+                '''
+            }
+        }
     }
 }
