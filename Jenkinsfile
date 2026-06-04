@@ -1,36 +1,32 @@
 pipeline {
 
-```
-agent any
+    agent any
 
-stages {
+    stages {
 
-    stage('Build Backend') {
+        stage('Build Backend') {
 
-        steps {
+            steps {
 
-            dir('backend') {
+                dir('backend') {
 
-                sh 'mvn clean package -DskipTests'
+                    sh 'mvn clean package -DskipTests'
+                }
             }
         }
-    }
 
-    stage('Build Frontend') {
+        stage('Build Frontend') {
 
-        steps {
+            steps {
 
-            dir('frontend') {
+                dir('frontend') {
 
-                sh 'npm install'
+                    sh 'npm install'
 
-                sh 'npm run build'
+                    sh 'npm run build'
+                }
             }
         }
+
     }
-
 }
-```
-
-}
-
