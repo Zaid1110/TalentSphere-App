@@ -10,7 +10,7 @@ pipeline {
 
                 dir('backend') {
 
-                    sh 'mvn clean test -DskipTests'
+                    sh 'mvn clean package -DskipTests'
 
                 }
 
