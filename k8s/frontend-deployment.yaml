@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: talentsphere-frontend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: talentsphere-frontend
+
+  template:
+    metadata:
+      labels:
+        app: talentsphere-frontend
+
+    spec:
+      containers:
+      - name: talentsphere-frontend
+
+        image: zaidaftab/talentsphere-frontend:latest
+
+        ports:
+        - containerPort: 80
