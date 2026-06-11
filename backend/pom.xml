@@ -87,7 +87,23 @@
     		<scope>runtime</scope>
 	</dependency>
 	</dependencies>
+	<distributionManagement>
 
+    <repository>
+        <id>nexus</id>
+        <url>
+            http://35.172.213.118:8081/repository/maven-releases/
+        </url>
+    </repository>
+
+    <snapshotRepository>
+        <id>nexus</id>
+        <url>
+            http://35.172.213.118:8081/repository/maven-snapshots/
+        </url>
+    </snapshotRepository>
+
+</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>

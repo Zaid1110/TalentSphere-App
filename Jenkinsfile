@@ -61,8 +61,21 @@ pipeline {
             }
 
         }
-
-        stage('Docker Build Backend') {
+	stage('Upload Artifact To Nexus') {
+	  
+	   steps {
+       	 
+	        dir('backend') {
+         
+          	   sh 'mvn deploy -DskipTests'
+       	  
+	        }
+       	  
+	   }
+     
+       }
+      
+	  stage('Docker Build Backend') {
 
             steps {
 
