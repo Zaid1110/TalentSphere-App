@@ -46,11 +46,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
+   		    	 <groupId>com.mysql</groupId>
+   			 <artifactId>mysql-connector-j</artifactId>
+			 <scope>runtime</scope>
+		</dependency>
+		<dependency>
+    			<groupId>com.h2database</groupId>
+    			<artifactId>h2</artifactId>
+   		 	<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -87,7 +91,19 @@
     		<scope>runtime</scope>
 	</dependency>
 	</dependencies>
+	<distributionManagement>
 
+	    <repository>
+	        <id>nexus</id>
+	        <url>http://35.172.213.118:8081/repository/maven-releases/</url>
+    	    </repository>
+
+	    <snapshotRepository>
+       		 <id>nexus</id>
+       		 <url>http://35.172.213.118:8081/repository/maven-snapshot/</url>
+    	    </snapshotRepository>
+
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
