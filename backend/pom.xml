@@ -89,21 +89,17 @@
 	</dependencies>
 	<distributionManagement>
 
-    <repository>
-        <id>nexus</id>
-        <url>
-            http://35.172.213.118:8081/repository/maven-releases/
-        </url>
-    </repository>
+	    <repository>
+	        <id>nexus</id>
+	        <url>http://35.172.213.118:8081/repository/maven-releases/</url>
+    	    </repository>
 
-    <snapshotRepository>
-        <id>nexus</id>
-        <url>
-            http://35.172.213.118:8081/repository/maven-snapshots/
-        </url>
-    </snapshotRepository>
+	    <snapshotRepository>
+       		 <id>nexus</id>
+       		 <url>http://35.172.213.118:8081/repository/maven-snapshot/</url>
+    	    </snapshotRepository>
 
-</distributionManagement>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
