@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+
+metadata:
+  name: talentsphere-backend
+
+  namespace: monitoring
+
+spec:
+  selector:
+    matchLabels:
+      app: talentsphere-backend
+
+  namespaceSelector:
+    matchNames:
+      - default
+
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
