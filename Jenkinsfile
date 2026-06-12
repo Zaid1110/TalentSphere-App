@@ -222,7 +222,22 @@ pipeline {
             }
 
         }
+	stage('Deploy To EKS') {
 
+ 	   steps {
+
+               sh '''
+       	       export AWS_SHARED_CREDENTIALS_FILE=/var/jenkins_home/.aws/credentials
+               export KUBECONFIG=/var/jenkins_home/kubeconfig
+
+               kubectl rollout restart deployment/talentsphere-backend
+               kubectl rollout restart deployment/talentsphere-frontend
+
+               kubectl rollout status deployment/talentsphere-backend
+               kubectl rollout status deployment/talentsphere-frontend
+               '''
+           }
+        }
     }
 
 }
