@@ -20,7 +20,7 @@ spec:
       containers:
       - name: talentsphere-backend
 
-        image: zaidaftab/talentsphere-backend:latest
+        image: zaidaftab/talentsphere-backend:1
 
         ports:
         - containerPort: 8080
