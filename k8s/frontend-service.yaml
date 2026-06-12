@@ -9,7 +9,7 @@ spec:
     app: talentsphere-frontend
 
   ports:
-  - port: 80
-    targetPort: 80
+    - port: 80
+      targetPort: 80
 
-  type: LoadBalancer
+  type: ClusterIP
