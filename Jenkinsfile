@@ -85,9 +85,7 @@ pipeline {
                     )
                 ]) {
                     sh '''
-                    echo "$DOCKER_PASS" | docker login 
-                    -u "$DOCKER_USER" 
-                    --password-stdin
+                    echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
                     '''
                 }
             }
@@ -96,11 +94,8 @@ pipeline {
         stage('Push Backend Image') {
             steps {
                 sh '''
-                docker tag talentsphere-backend:latest 
-                zaidaftab/talentsphere-backend:${IMAGE_TAG}
-
-                docker push 
-                zaidaftab/talentsphere-backend:${IMAGE_TAG}
+                docker tag talentsphere-backend:latest zaidaftab/talentsphere-backend:${BUILD_NUMBER}
+                docker push zaidaftab/talentsphere-backend:${BUILD_NUMBER}
                 '''
             }
         }
@@ -108,11 +103,8 @@ pipeline {
         stage('Push Frontend Image') {
             steps {
                 sh '''
-                docker tag talentsphere-frontend:latest 
-                zaidaftab/talentsphere-frontend:${IMAGE_TAG}
-
-                docker push 
-                zaidaftab/talentsphere-frontend:${IMAGE_TAG}
+                docker tag talentsphere-frontend:latest zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
+                docker push zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
                 '''
             }
         }
