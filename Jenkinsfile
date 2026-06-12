@@ -114,7 +114,7 @@ pipeline {
 
                 sh """
 		echo "Current Build Number = ${BUILD_NUMBER}"
-		"""
+	
        		export AWS_PAGER=""
         	export AWS_SHARED_CREDENTIALS_FILE=/var/jenkins_home/.aws/credentials
         	export KUBECONFIG=/var/jenkins_home/kubeconfig
