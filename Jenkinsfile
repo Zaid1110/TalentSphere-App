@@ -108,24 +108,30 @@ pipeline {
                 '''
             }
         }
-
         stage('Deploy To EKS') {
-            steps {
-                sh '''
-                kubectl set image deployment/talentsphere-backend 
-                talentsphere-backend=zaidaftab/talentsphere-backend:${BUILD_NUMBER}
 
-                kubectl set image deployment/talentsphere-frontend 
-                talentsphere-frontend=zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
+           steps {
 
-                kubectl rollout status deployment/talentsphere-backend
+                sh """
+		echo "Current Build Number = ${BUILD_NUMBER}"
+		"""
+       		export AWS_PAGER=""
+        	export AWS_SHARED_CREDENTIALS_FILE=/var/jenkins_home/.aws/credentials
+        	export KUBECONFIG=/var/jenkins_home/kubeconfig
 
-                kubectl rollout status deployment/talentsphere-frontend
-                '''
-            }
-        }
-    }
+        	kubectl set image deployment/talentsphere-backend \
+        	talentsphere-backend=zaidaftab/talentsphere-backend:${BUILD_NUMBER}
 
+        	kubectl set image deployment/talentsphere-frontend \
+        	talentsphere-frontend=zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
+
+        	kubectl rollout status deployment/talentsphere-backend
+
+        	kubectl rollout status deployment/talentsphere-frontend
+        	"""
+         }
+     }      
+}
     post {
 
         success {
