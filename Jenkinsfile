@@ -113,10 +113,10 @@ pipeline {
             steps {
                 sh '''
                 kubectl set image deployment/talentsphere-backend 
-                talentsphere-backend=zaidaftab/talentsphere-backend:${IMAGE_TAG}
+                talentsphere-backend=zaidaftab/talentsphere-backend:${BUILD_NUMBER}
 
                 kubectl set image deployment/talentsphere-frontend 
-                talentsphere-frontend=zaidaftab/talentsphere-frontend:${IMAGE_TAG}
+                talentsphere-frontend=zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
 
                 kubectl rollout status deployment/talentsphere-backend
 
