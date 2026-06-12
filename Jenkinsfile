@@ -85,38 +85,72 @@ stages {
     }
 
     stage('Push Backend Image') {
-        steps {
-            sh '''
-            docker tag talentsphere-backend:latest zaidaftab/talentsphere-backend:latest
-            docker push zaidaftab/talentsphere-backend:latest
-            '''
+
+    	steps {
+
+            sh """
+            docker tag talentsphere-backend:latest \
+            zaidaftab/talentsphere-backend:${BUILD_NUMBER}
+
+            docker push \
+            zaidaftab/talentsphere-backend:${BUILD_NUMBER}
+            """
         }
     }
-
     stage('Push Frontend Image') {
-        steps {
-            sh '''
-            docker tag talentsphere-frontend:latest zaidaftab/talentsphere-frontend:latest
-            docker push zaidaftab/talentsphere-frontend:latest
-            '''
+
+         steps {
+
+             sh """
+             docker tag talentsphere-frontend:latest \
+             zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
+
+             docker push \
+             zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
+             """
         }
     }
-
     stage('Deploy To EKS') {
+
         steps {
+
             sh '''
             export AWS_PAGER=""
             export AWS_SHARED_CREDENTIALS_FILE=/var/jenkins_home/.aws/credentials
             export KUBECONFIG=/var/jenkins_home/kubeconfig
 
-            kubectl rollout restart deployment/talentsphere-backend
-            kubectl rollout restart deployment/talentsphere-frontend
+            kubectl set image deployment/talentsphere-backend \
+            talentsphere-backend=zaidaftab/talentsphere-backend:${BUILD_NUMBER}
+
+            kubectl set image deployment/talentsphere-frontend \
+            talentsphere-frontend=zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
 
             kubectl rollout status deployment/talentsphere-backend
+
             kubectl rollout status deployment/talentsphere-frontend
             '''
         }
     }
+    stage('Rollback') {
+
+        when {
+          expression {
+            currentBuild.result == 'FAILURE'
+         }
+     }
+
+     steps {
+
+        sh '''
+        export AWS_SHARED_CREDENTIALS_FILE=/var/jenkins_home/.aws/credentials
+        export KUBECONFIG=/var/jenkins_home/kubeconfig
+
+        kubectl rollout undo deployment/talentsphere-backend
+
+        kubectl rollout undo deployment/talentsphere-frontend
+        '''
+      }
+   }
 }
 
 post {
