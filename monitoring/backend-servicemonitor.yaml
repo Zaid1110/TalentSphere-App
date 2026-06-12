@@ -3,8 +3,10 @@ kind: ServiceMonitor
 
 metadata:
   name: talentsphere-backend
-
   namespace: monitoring
+
+  labels:
+    release: monitoring
 
 spec:
   selector:
