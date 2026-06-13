@@ -1,38 +1,29 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: talentsphere-backend
+containers:
+  - name: talentsphere-backend
 
-spec:
-  replicas: 1
+    image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
 
-  selector:
-    matchLabels:
-      app: talentsphere-backend
+    ports:
+      - containerPort: 8080
 
-  template:
-    metadata:
-      labels:
-        app: talentsphere-backend
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
 
-    spec:
-      containers:
-      - name: talentsphere-backend
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
 
-        image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://mysql:3306/talentsphere
 
-        ports:
-        - containerPort: 8080
+      - name: SPRING_DATASOURCE_USERNAME
+        value: root
 
-        env:
-        - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://mysql:3306/talentsphere
-
-        - name: SPRING_DATASOURCE_USERNAME
-          value: root
-        
-        - name: SPRING_DATASOURCE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_ROOT_PASSWORD
+      - name: SPRING_DATASOURCE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: MYSQL_ROOT_PASSWORD
