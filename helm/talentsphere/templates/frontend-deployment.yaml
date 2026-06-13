@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: talentsphere-frontend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: talentsphere-frontend
+
+  template:
+    metadata:
+      labels:
+        app: talentsphere-frontend
+
+    spec:
+      containers:
+      - name: talentsphere-frontend
+
+        image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+
+        ports:
+        - containerPort: 80
