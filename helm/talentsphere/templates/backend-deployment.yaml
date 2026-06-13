@@ -30,6 +30,9 @@ spec:
 
         - name: SPRING_DATASOURCE_USERNAME
           value: root
-
+        
         - name: SPRING_DATASOURCE_PASSWORD
-          value: root123
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
