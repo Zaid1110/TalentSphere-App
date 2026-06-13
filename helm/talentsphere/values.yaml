@@ -18,3 +18,8 @@ mysql:
 
 ingress:
   enabled: true
+
+hpa:
+  minReplicas: 1
+  maxReplicas: 5
+  cpuThreshold: 70

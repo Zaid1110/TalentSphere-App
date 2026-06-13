@@ -10,8 +10,8 @@ spec:
     kind: Deployment
     name: talentsphere-backend
 
-  minReplicas: 1
-  maxReplicas: 5
+  minReplicas: {{ .Values.hpa.minReplicas }}
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
 
   metrics:
   - type: Resource
@@ -21,4 +21,4 @@ spec:
 
       target:
         type: Utilization
-        averageUtilization: 70
+        averageUtilization: {{ .Values.hpa.cpuThreshold }}

@@ -5,7 +5,7 @@ metadata:
   name: talentsphere-backend
 
 spec:
-  replicas: {{ .Values.backend.replicaCount }}
+  replicas: 1
 
   selector:
     matchLabels:
@@ -29,9 +29,24 @@ spec:
           requests:
             cpu: "100m"
             memory: "256Mi"
+
           limits:
             cpu: "500m"
             memory: "512Mi"
+
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5
 
         env:
         - name: SPRING_DATASOURCE_URL
@@ -45,4 +60,3 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_ROOT_PASSWORD
-
