@@ -17,6 +17,7 @@ spec:
         app: mysql
 
     spec:
+
       containers:
       - name: mysql
 
@@ -24,6 +25,10 @@ spec:
 
         ports:
         - containerPort: 3306
+
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
 
         env:
         - name: MYSQL_ROOT_PASSWORD
@@ -34,3 +39,8 @@ spec:
 
         - name: MYSQL_DATABASE
           value: "{{ .Values.mysql.database }}"
+
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
