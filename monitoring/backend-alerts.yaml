@@ -1,0 +1,55 @@
+
+apiVersion: monitoring.coreos.com/v1
+
+kind: PrometheusRule
+
+metadata:
+
+  name: talentsphere-alerts
+
+  namespace: monitoring
+
+  labels:
+
+    release: monitoring
+
+spec:
+
+  groups:
+
+  - name: talentsphere.rules
+
+    rules:
+
+    - alert: BackendDown
+
+      expr: up{job="talentsphere-backend"} == 0
+
+      for: 1m
+
+      labels:
+
+        severity: critical
+
+      annotations:
+
+        summary: "TalentSphere Backend is DOWN"
+
+        description: "Prometheus cannot scrape TalentSphere backend."
+
+    - alert: HighCPUUsage
+
+      expr: process_cpu_usage{job="talentsphere-backend"} > 0.8
+
+      for: 2m
+
+      labels:
+
+        severity: warning
+
+      annotations:
+
+        summary: "High CPU Usage"
+
+        description: "Backend CPU usage is above 80%."
+
