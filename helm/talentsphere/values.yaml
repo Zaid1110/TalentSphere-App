@@ -9,9 +9,15 @@ frontend:
     tag: latest
 
 mysql:
+  image:
+    repository: mysql
+    tag: "8.4"
+
   rootPassword: root123
   database: talentsphere
 
+ingress:
+  enabled: true
 # Default values for talentsphere.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.

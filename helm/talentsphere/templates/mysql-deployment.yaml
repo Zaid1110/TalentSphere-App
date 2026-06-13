@@ -20,14 +20,14 @@ spec:
       containers:
       - name: mysql
 
-        image: mysql:8.4
+        image: "{{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}"
 
         ports:
         - containerPort: 3306
 
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: root123
+          value: "{{ .Values.mysql.rootPassword }}"
 
         - name: MYSQL_DATABASE
-          value: talentsphere
+          value: "{{ .Values.mysql.database }}"
