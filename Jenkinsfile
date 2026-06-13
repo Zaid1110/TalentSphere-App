@@ -110,43 +110,35 @@ pipeline {
         }
         stage('Deploy To EKS') {
 
-           steps {
+ 	   steps {
 
-                sh """
-		echo "Current Build Number = ${BUILD_NUMBER}"
-	
-       		export AWS_PAGER=""
+       		sh """
+        	export AWS_PAGER=""
         	export AWS_SHARED_CREDENTIALS_FILE=/var/jenkins_home/.aws/credentials
         	export KUBECONFIG=/var/jenkins_home/kubeconfig
 
-        	kubectl set image deployment/talentsphere-backend \
-        	talentsphere-backend=zaidaftab/talentsphere-backend:${BUILD_NUMBER}
-
-        	kubectl set image deployment/talentsphere-frontend \
-        	talentsphere-frontend=zaidaftab/talentsphere-frontend:${BUILD_NUMBER}
+        	helm upgrade --install talentsphere ./helm/talentsphere --set backend.image.tag=${BUILD_NUMBER} --set frontend.image.tag=${BUILD_NUMBER}
 
         	kubectl rollout status deployment/talentsphere-backend
-
         	kubectl rollout status deployment/talentsphere-frontend
         	"""
-         }
-     }      
+   	 }
+     }
 }
     post {
 
         success {
             echo 'Pipeline completed successfully!'
         }
-
         failure {
+		
+		sh '''
+    		export KUBECONFIG=/var/jenkins_home/kubeconfig
 
-            echo 'Pipeline failed. Rolling back deployment...'
+    		helm history talentsphere
 
-            sh '''
-            kubectl rollout undo deployment/talentsphere-backend || true
-
-            kubectl rollout undo deployment/talentsphere-frontend || true
-            '''
-        }
-    }
+    		helm rollback talentsphere 1 || true
+    		'''
+	    }
+       }
 }
