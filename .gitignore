@@ -1,1 +1,37 @@
+# macOS
 .DS_Store
+
+# Java
+target/
+*.class
+*.log
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# NodeJS
+node_modules/
+dist/
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+
+# Environment
+.env
+.env.*
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Kubernetes
+kubeconfig
+
+# Jenkins
+workspace/
+
+# OS
+Thumbs.db
