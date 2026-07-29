@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/30489142/README.md)
 # TalentSphere
 
 A full-stack skill-verification platform with a production-style DevSecOps pipeline — built to showcase end-to-end delivery from code to a monitored Kubernetes deployment.
@@ -6,10 +5,10 @@ A full-stack skill-verification platform with a production-style DevSecOps pipel
 ## Architecture
 
 ```
-┌─────────────┐      ┌──────────────┐      ┌───────────┐
+┌─────────────-┐      ┌──────────────┐      ┌───────────┐
 │   Frontend   │ ───▶ │   Backend    │ ───▶ │   MySQL   │
 │ React + Vite │      │ Spring Boot  │      │    8.4    │
-└─────────────┘      └──────────────┘      └───────────┘
+└─────────────-┘      └──────────────┘      └───────────┘
 ```
 
 Both services are containerized, deployed to Kubernetes via Helm, and monitored with Prometheus.
